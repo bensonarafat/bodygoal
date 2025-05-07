@@ -1,6 +1,9 @@
 import 'package:bodygoal/data/remote/dio_interceptors/error_interceptor.dart';
+import 'package:bodygoal/data/repositories/onboarding_repository.dart';
+import 'package:bodygoal/ui/screens/onboarding/provider/onboarding_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:provider/provider.dart';
 
 abstract class Providers {
   static final Dio _dio = Dio(
@@ -21,9 +24,19 @@ abstract class Providers {
 
   static final List<SingleChildWidget> _serviceProviders = [];
 
-  static final List<SingleChildWidget> _repositoryProviders = [];
+  static final List<SingleChildWidget> _repositoryProviders = [
+    Provider<OnboardingRepository>.value(
+      value: OnboardingRespositoryImpl(),
+    )
+  ];
 
-  static final List<SingleChildWidget> _changeProviders = [];
+  static final List<SingleChildWidget> _changeProviders = [
+    ChangeNotifierProxyProvider<OnboardingRepository, OnboardingProvider>(
+        create: (context) =>
+            OnboardingProvider(context.read<OnboardingRepository>()),
+        update: (context, repository, provider) =>
+            provider ?? OnboardingProvider(repository)),
+  ];
 
   static List<SingleChildWidget> providers = [
     ..._apiProviders,

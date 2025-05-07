@@ -50,12 +50,12 @@ class BodyGoal extends StatelessWidget with GetItMixin {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      // builder: (_, router) {
-      //   return MultiProvider(
-      //     providers: Providers.providers,
-      //     child: router!,
-      //   );
-      // },
+      builder: (_, router) {
+        return MultiProvider(
+          providers: Providers.providers,
+          child: router!,
+        );
+      },
     );
   }
 }

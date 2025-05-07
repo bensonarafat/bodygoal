@@ -55,24 +55,24 @@ class _Text {
   _Text(this._scale);
 
   final Map<String, TextStyle> _titleFonts = {
-    'en': const TextStyle(fontFamily: "Tenor"),
+    'en': const TextStyle(fontFamily: "Lato"),
   };
 
   final Map<String, TextStyle> _monoTitleFonts = {
-    'en': const TextStyle(fontFamily: 'B612Mono'),
+    'en': const TextStyle(fontFamily: 'Lato'),
   };
 
   final Map<String, TextStyle> _quoteFonts = {
-    'en': const TextStyle(fontFamily: 'Cinzel'),
-    'zh': const TextStyle(fontFamily: 'MaShanZheng'),
+    'en': const TextStyle(fontFamily: 'Lato'),
+    'zh': const TextStyle(fontFamily: 'Lato'),
   };
 
   final Map<String, TextStyle> _tempusTitleFonts = {
-    'en': const TextStyle(fontFamily: "Yeseva"),
+    'en': const TextStyle(fontFamily: "Lato"),
   };
 
   final Map<String, TextStyle> _contentFonts = {
-    'en': const TextStyle(fontFamily: 'Raleway', fontFeatures: [
+    'en': const TextStyle(fontFamily: 'Lato', fontFeatures: [
       FontFeature.enable('kern'),
     ]),
   };

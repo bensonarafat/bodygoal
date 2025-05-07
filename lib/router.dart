@@ -1,6 +1,7 @@
 import 'package:bodygoal/main.dart';
 import 'package:bodygoal/ui/app_scaffold.dart';
 import 'package:bodygoal/ui/common/utils/navigation_service.dart';
+import 'package:bodygoal/ui/screens/onboarding/onboarding_screen.dart';
 import 'package:bodygoal/ui/screens/page_not_found/page_not_found.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -8,9 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ScreenPaths {
-  static String splash = "/";
   static String home = "/home";
-  static String welcome = "/welcome";
+  static String onboarding = "/onboarding";
 }
 
 class AppRoute extends GoRoute {
@@ -54,12 +54,7 @@ final appRouter = GoRouter(
             );
           },
           routes: [
-            AppRoute(
-              ScreenPaths.splash,
-              (_) => Container(
-                color: $styles.colors.greyStrong,
-              ),
-            ),
+            AppRoute(ScreenPaths.onboarding, (_) => const OnboardingScreen()),
           ]),
     ]);
 
@@ -68,13 +63,16 @@ String? get initialDeeplink => _initialDeeplink;
 
 String? _handleRedirect(BuildContext context, GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
-  if (!appLogic.isBootstrapComplete && state.uri.path != ScreenPaths.splash) {
-    debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.splash}');
+  if (!appLogic.isBootstrapComplete &&
+      state.uri.path != ScreenPaths.onboarding) {
+    debugPrint(
+        'Redirecting from ${state.uri.path} to ${ScreenPaths.onboarding}');
     _initialDeeplink ??= state.uri.toString();
-    return ScreenPaths.splash;
+    return ScreenPaths.onboarding;
   }
 
-  if (appLogic.isBootstrapComplete && state.uri.path == ScreenPaths.splash) {
+  if (appLogic.isBootstrapComplete &&
+      state.uri.path == ScreenPaths.onboarding) {
     debugPrint("Redirecting from ${state.uri.path} to ${ScreenPaths.home}");
     return ScreenPaths.home;
   }
