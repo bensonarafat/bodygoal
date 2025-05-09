@@ -1,10 +1,12 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:bodygoal/data/models/onboarding.dart';
 import 'package:bodygoal/main.dart';
+import 'package:bodygoal/router.dart';
 import 'package:bodygoal/ui/screens/onboarding/widgets/circular_timer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:video_player/video_player.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -47,10 +49,10 @@ class _OnboardingPageState extends State<OnboardingPage>
 
   @override
   void dispose() {
-    _controller.removeListener(_videoListener);
-
-    _controller.dispose();
     super.dispose();
+    _controller.removeListener(_videoListener);
+    _controller.pause();
+    _controller.dispose();
   }
 
   void _videoListener() {
@@ -154,51 +156,53 @@ class _OnboardingPageState extends State<OnboardingPage>
           ),
         ),
         Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: MediaQuery.of(context).size.height / 2.5,
-              padding: EdgeInsets.all($styles.insets.sm),
-              child: Column(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          widget.len,
-                          (index) =>
-                              _buildPageIndicator(index == widget.currentIndex),
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: MediaQuery.of(context).size.height / 2.8,
+            padding: EdgeInsets.all($styles.insets.sm),
+            child: Column(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        widget.len,
+                        (index) =>
+                            _buildPageIndicator(index == widget.currentIndex),
+                      ),
+                    ),
+                    const Gap(9),
+                    Text(
+                      widget.data.description,
+                      textAlign: TextAlign.center,
+                      style:
+                          $styles.text.h3.copyWith(fontWeight: FontWeight.w800),
+                    ),
+                  ],
+                ),
+                const Gap(80),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        widget.data.action,
+                        textAlign: TextAlign.end,
+                        style: $styles.text.btn.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const Gap(9),
-                      Text(
-                        widget.data.description,
-                        textAlign: TextAlign.center,
-                        style: $styles.text.h3
-                            .copyWith(fontWeight: FontWeight.w800),
-                      ),
-                    ],
-                  ),
-                  const Gap(80),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          widget.data.action,
-                          textAlign: TextAlign.end,
-                          style: $styles.text.btn.copyWith(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () => context.go(ScreenPaths.login),
                         child: AvatarGlow(
                           child: Material(
                             elevation: 5.0,
@@ -214,11 +218,13 @@ class _OnboardingPageState extends State<OnboardingPage>
                           ),
                         ),
                       ),
-                    ],
-                  )
-                ],
-              ),
-            )),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

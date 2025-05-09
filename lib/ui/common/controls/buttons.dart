@@ -35,6 +35,7 @@ class AppBtn extends StatelessWidget {
   final BorderSide? border;
   final Color? bgColor;
   final bool pressEffect;
+  final double borderRadius;
 
   // ignore: prefer_const_constructors_in_immutables
   AppBtn({
@@ -53,6 +54,7 @@ class AppBtn extends StatelessWidget {
     this.border,
     this.focusNode,
     this.onFocusChanged,
+    this.borderRadius = 10,
   }) : _builder = null;
 
   AppBtn.from({
@@ -63,6 +65,7 @@ class AppBtn extends StatelessWidget {
     this.padding,
     this.expand = false,
     this.isSecondary = false,
+    this.borderRadius = 10,
     this.minimumSize,
     this.bgColor,
     this.border,
@@ -109,6 +112,7 @@ class AppBtn extends StatelessWidget {
     required this.semanticLabel,
     this.enableFeedback = true,
     this.pressEffect = true,
+    this.borderRadius = 10,
     this.child,
     this.padding = EdgeInsets.zero,
     this.isSecondary = false,
@@ -140,7 +144,7 @@ class AppBtn extends StatelessWidget {
         ? CircleBorder(side: side)
         : RoundedRectangleBorder(
             side: side,
-            borderRadius: BorderRadius.circular($styles.corners.xs),
+            borderRadius: BorderRadius.circular(borderRadius),
           );
 
     ButtonStyle style = ButtonStyle(
